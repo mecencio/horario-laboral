@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, first, map, Observable, of } from 'rxjs';
 import { IDay } from '../interfaces/i-day';
 import { Day } from '../models/day';
 import { Schedule } from '../models/schedule';
@@ -180,12 +180,14 @@ export class WeekService {
       throw DayError.invalid(day.name, this.lang);
     }
     return this.days$.pipe(
+      first(),
       map((days: IDay[]) => {
         const idx = days.findIndex((d) => d.name === day.name);
         if (idx !== -1) {
-          days[idx] = day;
-          this.setDays(days);
-          return day;
+          const updatedDays = [ ...days ];
+          updatedDays[idx] = day;
+          this.setDays(updatedDays);
+          return updatedDays[idx];
         } else {
           throw DayError.notFound(day.name, this.lang);
         }
