@@ -4,6 +4,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { SelectButton } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
+import { IOptions } from './core/interfaces/i-options';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,8 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   title = 'horario-laboral';
   currentYear: number = new Date().getFullYear();
-  routes: any[] = [];
-  workdayOptions: any[] = [
+  routes: IOptions[] = [];
+  workdayOptions: IOptions[] = [
     { name: '7.5 horas', value: 7.5 },
     { name: '8 horas', value: 8 }
   ];
