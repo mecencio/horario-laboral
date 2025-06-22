@@ -1,4 +1,4 @@
-import { SupportedLang } from "../types/supported-langs";
+import { SupportedLang } from "../types/types";
 
 /**
  * Represents an error related to day operations within the application.
