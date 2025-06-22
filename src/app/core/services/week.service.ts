@@ -5,7 +5,7 @@ import { Day } from '../models/day';
 import { Schedule } from '../models/schedule';
 import { VALID_DAYS } from '../constants/valid-days';
 import { DayError } from '../errors/day.error';
-import { SupportedLang } from '../types/supported-langs';
+import { SupportedLang } from '../types/types';
 
 @Injectable({
   providedIn: 'root',

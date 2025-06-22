@@ -1,4 +1,4 @@
-import { SupportedLang } from "../types/supported-langs";
+import { SupportedLang } from "../types/types";
 
 /**
  * A mapping of supported languages to their respective lists of valid day names.
