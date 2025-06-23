@@ -1,17 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { WeekService } from '../../core/services/week.service';
+import { IDay } from '../../core/interfaces/i-day';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-day-tracker',
   imports: [
+    CommonModule,
     ButtonModule,
   ],
   templateUrl: './day-tracker.component.html',
-  styleUrl: './day-tracker.component.scss'
+  styleUrl: './day-tracker.component.scss',
 })
-export class DayTrackerComponent {
-  clockInTime: Date | null = null;
-  clockOutTime: Date | null = null;
+export class DayTrackerComponent implements OnInit {
+  today!: IDay;
+  clockInTime: Date | undefined;
+  clockOutTime: Date | undefined;
+
+  constructor(private weekService: WeekService) {}
+
+  ngOnInit() {
+    const today = new Date('2025-06-23').toLocaleDateString('es-AR', {
+      //const today = new Date("2025-06-23").toLocaleDateString('en-US', {
+      weekday: 'long',
+    });
+
+    this.weekService.getDayById(today).subscribe({
+      next: (day) => {
+        this.today = day;
+        this.clockInTime = day.schedule.clockInTime
+          ? new Date(day.schedule.clockInTime)
+          : undefined;
+        this.clockOutTime = day.schedule.clockOutTime
+          ? new Date(day.schedule.clockOutTime)
+          : undefined;
+
+        console.log('Today is ' + this.today.name);
+        console.log('Clock-in time is ' + this.clockInTime?.toLocaleTimeString());
+        console.log('Clock-out time is ' + this.clockOutTime?.toLocaleTimeString());
+      },
+      error: (err) => {
+        console.error('Error fetching day:', err);
+      },
+    });
+  }
 
   clockIn() {
     this.clockInTime = new Date();
@@ -20,6 +53,8 @@ export class DayTrackerComponent {
 
   clockOut() {
     this.clockOutTime = new Date();
-    console.log('Clock-out registered ' + this.clockOutTime.toLocaleTimeString());
+    console.log(
+      'Clock-out registered ' + this.clockOutTime.toLocaleTimeString()
+    );
   }
 }

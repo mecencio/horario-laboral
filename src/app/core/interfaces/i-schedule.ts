@@ -3,18 +3,18 @@ export interface ISchedule {
      * The entry time for the schedule.
      * @type {Date | undefined}
      */
-    entry?: Date;
+    clockInTime?: Date;
 
     /**
      * The exit time for the schedule.
      * @type {Date | undefined}
      */
-    exit?: Date;
+    clockOutTime?: Date;
 
     /**
-     * Calculates the difference in minutes between the entry and exit times.
-     * @returns {number} The difference in minutes between entry and exit.
-     * Returns 0 if either entry or exit is not defined.
+     * Calculates the difference in minutes between the clock-in and clock-out times.
+     * @returns {number} The difference in minutes between clock-in and clock-out.
+     * Returns 0 if either clock-in or clock-out is not defined.
      */
     calculateDifference(): number;
 }

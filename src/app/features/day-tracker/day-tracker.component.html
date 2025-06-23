@@ -1,3 +1,5 @@
+<h2 class="text-2xl font-bold text-primary mb-4">{{ today.name | titlecase }}</h2>
+
 <p-button label="Marcar entrada" styleClass="w-full" [raised]="true" size="large" icon="pi pi-arrow-circle-right"
     (click)="clockIn()" [disabled]="!!clockInTime" />
 <p-button label="Marcar salida" styleClass="w-full" [raised]="true" severity="secondary" size="large"
