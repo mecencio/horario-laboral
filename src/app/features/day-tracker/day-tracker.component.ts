@@ -3,12 +3,20 @@ import { ButtonModule } from 'primeng/button';
 import { WeekService } from '../../core/services/week.service';
 import { IDay } from '../../core/interfaces/i-day';
 import { CommonModule } from '@angular/common';
+import { FloatLabel } from 'primeng/floatlabel';
+import { DatePickerModule } from 'primeng/datepicker';
+import { CardModule } from 'primeng/card';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-day-tracker',
   imports: [
     CommonModule,
     ButtonModule,
+    FloatLabel,
+    DatePickerModule,
+    CardModule,
+    FormsModule,
   ],
   templateUrl: './day-tracker.component.html',
   styleUrl: './day-tracker.component.scss',
@@ -37,8 +45,12 @@ export class DayTrackerComponent implements OnInit {
           : undefined;
 
         console.log('Today is ' + this.today.name);
-        console.log('Clock-in time is ' + this.clockInTime?.toLocaleTimeString());
-        console.log('Clock-out time is ' + this.clockOutTime?.toLocaleTimeString());
+        console.log(
+          'Clock-in time is ' + this.clockInTime?.toLocaleTimeString()
+        );
+        console.log(
+          'Clock-out time is ' + this.clockOutTime?.toLocaleTimeString()
+        );
       },
       error: (err) => {
         console.error('Error fetching day:', err);
@@ -56,5 +68,11 @@ export class DayTrackerComponent implements OnInit {
     console.log(
       'Clock-out registered ' + this.clockOutTime.toLocaleTimeString()
     );
+  }
+
+  clear() {
+    this.clockInTime = undefined;
+    this.clockOutTime = undefined;
+    console.log('Clock-in and clock-out times cleared');
   }
 }
