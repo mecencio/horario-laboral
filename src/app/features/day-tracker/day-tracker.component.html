@@ -1,1 +1,4 @@
-<p>day-tracker works!</p>
+<p-button label="Marcar entrada" styleClass="w-full" [raised]="true" size="large" icon="pi pi-arrow-circle-right"
+    (click)="clockIn()" [disabled]="!!clockInTime" />
+<p-button label="Marcar salida" styleClass="w-full" [raised]="true" severity="secondary" size="large"
+    icon="pi pi-arrow-circle-left" (click)="clockOut()" [disabled]="!clockInTime || (!!clockInTime && !!clockOutTime)" />
