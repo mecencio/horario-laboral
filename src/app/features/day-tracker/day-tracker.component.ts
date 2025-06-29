@@ -7,16 +7,20 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
+import { Tooltip } from 'primeng/tooltip';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-day-tracker',
   imports: [
-    CommonModule,
     ButtonModule,
-    FloatLabel,
-    DatePickerModule,
     CardModule,
+    CommonModule,
+    DatePickerModule,
+    FloatLabel,
     FormsModule,
+    ToggleSwitch,
+    Tooltip,
   ],
   templateUrl: './day-tracker.component.html',
   styleUrl: './day-tracker.component.scss',
@@ -25,6 +29,7 @@ export class DayTrackerComponent implements OnInit {
   today!: IDay;
   clockInTime: Date | undefined;
   clockOutTime: Date | undefined;
+  toggled = false;
 
   constructor(private weekService: WeekService) {}
 
@@ -74,5 +79,11 @@ export class DayTrackerComponent implements OnInit {
     this.clockInTime = undefined;
     this.clockOutTime = undefined;
     console.log('Clock-in and clock-out times cleared');
+  }
+
+  calculateEstimatedExit() {
+    if (!this.clockInTime) return;
+
+    console.log("Toggled: ", this.toggled);
   }
 }
