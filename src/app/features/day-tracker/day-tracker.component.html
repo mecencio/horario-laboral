@@ -15,6 +15,15 @@
         </p-card>
 
         <p-card class="border-round w-8">
+            <div class="flex justify-content-around gap-2 m-3">
+                <div class="flex justify-center align-items-center">
+                    <p-toggleswitch [(ngModel)]="toggled" (onChange)="calculateEstimatedExit()" />
+                    <span class="px-2">Tener en cuenta tiempo acumulado</span>
+                    <i class="pi pi-info-circle"
+                        pTooltip="Se utiliza el tiempo acumulado de días anteriores para calcular la hora de salida estimada."
+                        tooltipPosition="top"></i>
+                </div>
+            </div>
             <div class="flex gap-4 m-3 mb-4 lg:flex-row sm:flex-column">
                 <p-floatlabel variant="on">
                     <p-datepicker [(ngModel)]="clockInTime" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
