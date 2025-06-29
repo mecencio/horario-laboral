@@ -23,6 +23,16 @@ export class WeekService {
   }
 
   /**
+   * Normalizes the given day name by capitalizing the first letter and converting the rest to lowercase.
+   *
+   * @param day - The name of the day to normalize.
+   * @returns The normalized day name with the first letter capitalized and the rest in lowercase.
+   */
+  private normalizeDayName(day: string): string {
+    return day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
+  }
+
+  /**
    * Determines the current language setting of the user's browser.
    *
    * @remarks
@@ -48,7 +58,7 @@ export class WeekService {
     if (!VALID_DAYS[lang]) {
       throw new Error(`Unsupported language: ${lang}`);
     }
-    return VALID_DAYS[lang]?.includes(day) ?? false;
+    return VALID_DAYS[lang]?.includes(this.normalizeDayName(day)) ?? false;
   }
 
   /**
@@ -157,13 +167,14 @@ export class WeekService {
     if (!this.isValidDay(id)) {
       throw DayError.invalid(id, this.lang);
     }
+    // Normalize the id to match the expected format
     return this.days$.pipe(
       map((days: IDay[]) => {
-        const found = days.find((day) => day.name === id);
+        const found = days.find((day) => day.name === this.normalizeDayName(id));
         if (found) {
           return found;
         }
-        return new Day(id, new Schedule(undefined, undefined));
+        return new Day(this.normalizeDayName(id), new Schedule(undefined, undefined));
       })
     );
   }
@@ -182,7 +193,7 @@ export class WeekService {
     return this.days$.pipe(
       first(),
       map((days: IDay[]) => {
-        const idx = days.findIndex((d) => d.name === day.name);
+        const idx = days.findIndex((d) => d.name === this.normalizeDayName(day.name));
         if (idx !== -1) {
           const updatedDays = [ ...days ];
           updatedDays[idx] = day;
