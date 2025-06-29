@@ -1,0 +1,57 @@
+<div class="p-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">{{ today.name | titlecase }}</h2>
+
+    <div class="flex justify-content-around gap-3 mb-4">
+        <p-card class="border-round w-4">
+            <ng-template pTemplate="content">
+                <div class="flex flex-column gap-3 p-3">
+                    <p-button label="Marcar entrada" styleClass="w-full" [raised]="true" size="large"
+                        icon="pi pi-arrow-circle-right" (click)="clockIn()" [disabled]="!!clockInTime" />
+                    <p-button label="Marcar salida" styleClass="w-full" [raised]="true" severity="secondary"
+                        size="large" icon="pi pi-arrow-circle-left" (click)="clockOut()"
+                        [disabled]="!clockInTime || (!!clockInTime && !!clockOutTime)" />
+                </div>
+            </ng-template>
+        </p-card>
+
+        <p-card class="border-round w-8">
+            <div class="flex justify-content-around gap-2 m-3">
+                <div class="text-right">Hora de salida estimada: <b>{{ estimatedExit ? (estimatedExit | date:'HH:mm:ss')
+                        : '-' }}</b></div>
+                <div class="flex justify-center align-items-center">
+                    <p-toggleswitch [(ngModel)]="toggled" (onChange)="calculateEstimatedExit()" (onBlur)="save()" />
+                    <span class="px-2">Tener en cuenta tiempo acumulado</span>
+                    <i class="pi pi-info-circle"
+                        pTooltip="Se utiliza el tiempo acumulado de días anteriores para calcular la hora de salida estimada."
+                        tooltipPosition="top"></i>
+                </div>
+            </div>
+            <div class="flex gap-4 m-3 mb-4 lg:flex-row sm:flex-column">
+                <p-floatlabel variant="on">
+                    <p-datepicker [(ngModel)]="clockInTime" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
+                        id="entry" [hourFormat]="'24'" showSeconds="true" (ngModelChange)="calculateEstimatedExit()">
+                        <ng-template #inputicon let-clickCallBack="clickCallBack">
+                            <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
+                        </ng-template>
+                    </p-datepicker>
+                    <label for="entry">Entrada</label>
+                </p-floatlabel>
+                <p-floatlabel variant="on">
+                    <p-datepicker [(ngModel)]="clockOutTime" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
+                        id="exit" [hourFormat]="'24'" showSeconds="true" [disabled]="!clockInTime" (onBlur)="save()">
+                        <ng-template #inputicon let-clickCallBack="clickCallBack">
+                            <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
+                        </ng-template>
+                    </p-datepicker>
+                    <label for="exit">Salida</label>
+                </p-floatlabel>
+            </div>
+        </p-card>
+    </div>
+
+    <div class="flex justify-content-center gap-3 m-3 p-3">
+        <p-button label="Limpiar" styleClass="w-full" [raised]="true" severity="secondary" size="large"
+            icon="pi pi-eraser" (click)="clear()" [disabled]="!clockInTime && !clockOutTime" />
+    </div>
+
+</div>

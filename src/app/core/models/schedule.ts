@@ -1,23 +1,23 @@
 import { ISchedule } from "../interfaces/i-schedule";
 
 export class Schedule implements ISchedule {
-    entry?: Date;
-    exit?: Date;
+    clockInTime?: Date;
+    clockOutTime?: Date;
 
-    constructor(entry: Date | undefined, exit: Date | undefined) {
-        this.entry = entry;
-        this.exit = exit;
+    constructor(clockInTime: Date | undefined, clockOutTime: Date | undefined) {
+        this.clockInTime = clockInTime;
+        this.clockOutTime = clockOutTime;
     }
 
     /**
-     * Calculates the difference in minutes between the `entry` and `exit` times.
+     * Calculates the difference in minutes between the `clockInTime` and `clockOutTime`.
      *
-     * @returns {number} The difference in minutes between `entry` and `exit`.
-     * Returns 0 if either `entry` or `exit` is not defined.
+     * @returns {number} The difference in minutes between `clockInTime` and `clockOutTime`.
+     * Returns 0 if either `clockInTime` or `clockOutTime` is not defined.
      */
     calculateDifference(): number {
-        if (!this.entry || !this.exit) return 0;
+        if (!this.clockInTime || !this.clockOutTime) return 0;
 
-        return (this.exit.getTime() - this.entry.getTime()) / 60000;
+        return (this.clockOutTime.getTime() - this.clockInTime.getTime()) / 60000;
     }
 }
