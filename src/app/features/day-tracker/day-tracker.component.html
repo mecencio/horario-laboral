@@ -16,8 +16,10 @@
 
         <p-card class="border-round w-8">
             <div class="flex justify-content-around gap-2 m-3">
+                <div class="text-right">Hora de salida estimada: <b>{{ estimatedExit ? (estimatedExit | date:'HH:mm:ss')
+                        : '-' }}</b></div>
                 <div class="flex justify-center align-items-center">
-                    <p-toggleswitch [(ngModel)]="toggled" (onChange)="calculateEstimatedExit()" />
+                    <p-toggleswitch [(ngModel)]="toggled" (onChange)="calculateEstimatedExit()" (onBlur)="save()" />
                     <span class="px-2">Tener en cuenta tiempo acumulado</span>
                     <i class="pi pi-info-circle"
                         pTooltip="Se utiliza el tiempo acumulado de días anteriores para calcular la hora de salida estimada."
@@ -27,7 +29,7 @@
             <div class="flex gap-4 m-3 mb-4 lg:flex-row sm:flex-column">
                 <p-floatlabel variant="on">
                     <p-datepicker [(ngModel)]="clockInTime" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
-                        id="entry" [hourFormat]="'24'" showSeconds="true">
+                        id="entry" [hourFormat]="'24'" showSeconds="true" (ngModelChange)="calculateEstimatedExit()">
                         <ng-template #inputicon let-clickCallBack="clickCallBack">
                             <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
                         </ng-template>
@@ -36,7 +38,7 @@
                 </p-floatlabel>
                 <p-floatlabel variant="on">
                     <p-datepicker [(ngModel)]="clockOutTime" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
-                        id="exit" [hourFormat]="'24'" showSeconds="true" [disabled]="!clockInTime">
+                        id="exit" [hourFormat]="'24'" showSeconds="true" [disabled]="!clockInTime" (onBlur)="save()">
                         <ng-template #inputicon let-clickCallBack="clickCallBack">
                             <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
                         </ng-template>
